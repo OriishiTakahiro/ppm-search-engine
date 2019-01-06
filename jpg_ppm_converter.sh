@@ -1,18 +1,20 @@
 #!/bin/sh
 
 SRC_DIR="${PWD}/tmp/101_ObjectCategories"   # Default value
-DST_DIR="${PWD}/images/"                    # Default value
+DST_DIR="${PWD}/images"                    # Default value
 
-if [ `$# -lt 2` ] ;  then
+if [ $# -ge 3 ] ;  then
   SRC_DIR=$1
-  SRC_DIR=$2
+  DST_DIR=$2
 fi
 
 echo "convert ${SRC_DIR}/*.jpg to ${DST_DIR}/*.ppm"
 
-for CATEGORY in ${SRC_DIR}/* ; do
-  mkdir -p ${DST_DIR}/${CATEGORY}/${CATEGORY}
-  for IMAGE in ${SRC_DIR}/${CATEGORY}/* ; do
-    convert ${SRC_DIR}/${CATEGORY}/${IMAGE}.jpg -quality 100 ${DST_DIR}/${CATEGORY}/${CATEGORY}/${IMAGE}.ppm
+for CATEGORY in `ls ${SRC_DIR}` ; do
+  mkdir ${DST_DIR}/${CATEGORY}
+  for IMAGE in `ls ${SRC_DIR}/${CATEGORY}` ; do
+    FILE_NAME=`basename ${SRC_DIR}/${IMAGE} .jpg`
+    echo "convert ${CATEGORY}/${FILE_NAME}.jpg to ${CATEGORY}/${FILE_NAME}.ppm"
+    convert ${SRC_DIR}/${CATEGORY}/${FILE_NAME}.jpg -quality 100 ${DST_DIR}/${CATEGORY}/${FILE_NAME}.ppm
   done
 done
