@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    working_directory: /go/src/github.com/OriishiTakahiro/ppm-search-engine
+    docker:
+      - image: circleci/golang:1.11.4
+  steps:
+    - checkout
+    - run: go get ./...
+    - run: go test -v ./...
