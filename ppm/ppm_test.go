@@ -36,14 +36,4 @@ func TestToHistgram(t *testing.T) {
 		t.Fatalf("Converting PPM to Histgram is failed. (%s)\n", row.Name)
 	}
 
-	row2 := img.ToHistgram()
-	if row.EuclidDistance(row2) != 0 {
-		t.Fatal("Different distance from 2 same images.")
-	}
-
-	row2.R[3] = 0
-	row2.G[2] = 0
-	if row.EuclidDistance(row2) == 0 {
-		t.Fatal("Same distance from 2 different images.")
-	}
 }

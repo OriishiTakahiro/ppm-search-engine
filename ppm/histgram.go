@@ -24,7 +24,7 @@ func NewHistgram(filename string) (obj Histgram) {
 }
 
 // EuclidDistance calculate euclid distance between lhs and rhs.
-func (lhs Histgram) EuclidDistance(rhs Histgram) (d int) {
+func EuclidDistance(lhs Histgram, rhs Histgram) (d int) {
 
 	d = 0
 	tmpR := 0.0
