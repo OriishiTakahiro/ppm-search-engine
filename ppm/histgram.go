@@ -1,6 +1,8 @@
 package ppm
 
 import (
+	"encoding/json"
+	"github.com/OriishiTakahiro/ppm-search-engine/store"
 	"math"
 )
 
@@ -23,27 +25,35 @@ func NewHistgram(filename string) (obj Histgram) {
 	return
 }
 
-// EuclidDistance calculate euclid distance between lhs and rhs.
-func EuclidDistance(lhs Histgram, rhs Histgram) (d int) {
+// FromJSON instantiates Histgram object from json data.
+func (h Histgram) FromJSON(jsonData []byte) (store.Item, error) {
+	result := Histgram{}
+	err := json.Unmarshal(jsonData, &result)
+	return result, err
+}
 
-	d = 0
-	tmpR := 0.0
-	tmpG := 0.0
-	tmpB := 0.0
-	for i, v := range lhs.R {
-		tmpR += math.Pow(float64(v-rhs.R[i]), 2.0)
-	}
-	for i, v := range lhs.G {
-		tmpG += math.Pow(float64(v-rhs.G[i]), 2.0)
-	}
-	for i, v := range lhs.B {
-		tmpB += math.Pow(float64(v-rhs.B[i]), 2.0)
-	}
-	tmpR = tmpR / histgramResolution
-	tmpG = tmpG / histgramResolution
-	tmpB = tmpB / histgramResolution
+// DistanceFrom calculate euclid distance between lhs and rhs.
+func (lhs Histgram) DistanceFrom(rhs interface{ GetValues() []int }) int {
 
-	d = int((tmpR + tmpG + tmpB) / 3.0)
+	d := 0.0
+	lhsValues := lhs.GetValues()
+	rhsValues := rhs.GetValues()
 
-	return
+	for i, v := range lhsValues {
+		d += math.Abs(math.Pow(float64(v), 2) - math.Pow(float64(rhsValues[i]), 2))
+	}
+
+	return int(d)
+}
+
+// GetName archive Name of a histgram item.
+func (recv Histgram) GetName() string {
+	return recv.Name
+}
+
+// GetValues returns a series of R, G, B histgram
+func (recv Histgram) GetValues() []int {
+	result := append(recv.R, recv.G...)
+	result = append(result, recv.B...)
+	return result
 }

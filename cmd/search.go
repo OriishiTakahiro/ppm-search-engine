@@ -41,8 +41,7 @@ func searchFunc(cmd *cobra.Command, args []string) {
 	}
 
 	hist := img.ToHistgram()
-	rows, err := store.SearchTop(hist, searchOps.limit, func() {
-	})
+	rows, err := store.SearchNearest(hist, searchOps.limit)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return

@@ -1,7 +1,11 @@
 package cmd
 
 import (
+	"fmt"
+	"github.com/OriishiTakahiro/ppm-search-engine/ppm"
+	"github.com/OriishiTakahiro/ppm-search-engine/store"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 var (
@@ -12,6 +16,12 @@ var (
 		},
 	}
 )
+
+func init() {
+	if err := store.OpenAndRead(ppm.Histgram{}); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+	}
+}
 
 // ExecuteCmd : Execute commands.
 func ExecuteCmd() {
