@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/json"
 	"io"
-	"log"
 	"os"
 	"sort"
 )
@@ -70,9 +69,6 @@ func OpenAndRead(tmpItem Item) error {
 			return err
 		}
 		storedData = append(storedData, item)
-	}
-	for _, v := range storedData {
-		log.Println(v)
 	}
 	return nil
 
