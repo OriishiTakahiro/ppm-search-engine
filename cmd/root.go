@@ -12,8 +12,6 @@ var (
 	rootCmd = &cobra.Command{
 		Use:   "ppm-search-engine",
 		Short: "Image search search engine.",
-		Run: func(cmd *cobra.Command, args []string) {
-		},
 	}
 )
 

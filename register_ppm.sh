@@ -9,6 +9,6 @@ fi
 
 for CATEGORY in `ls ${IMG_DIR}` ; do
   for IMAGE in `ls ${IMG_DIR}/${CATEGORY}` ; do
-    ${PWD}/${BINARY_NAME} register ${IMG_DIR}/${CATEGORY}/${IMAGE}
+    cd ${PWD} && ${BINARY_NAME} register ${CATEGORY}/${IMAGE}
   done
 done
